@@ -1,0 +1,62 @@
+package org.rui.collection;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+public class MultiIterableClass extends IterableClass {
+
+	public Iterable<String> reverseds() {
+		return new Iterable<String>() {
+			public Iterator<String> iterator() {
+				return new Iterator<String>() {
+					int current = words.length - 1;
+
+					public boolean hasNext() {
+						return current > -1;
+					}
+
+					public String next() {
+						return words[current--];
+					}
+
+					public void remove() {
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+		};
+	}
+
+	// ----randomized---
+	public Iterable<String> randomized() {
+		return new Iterable<String>() {
+			public Iterator<String> iterator() {
+				List<String> shuffled = new ArrayList<String>(
+						Arrays.asList(words));
+				/**
+				 * 使用指定的随机源对指定列表进行置换。 所有置换发生的可能性都是相等的，假定随机源是公平的。
+				 */
+				Collections.shuffle(shuffled, new Random(47));
+				return shuffled.iterator();
+			}
+		};
+	}
+
+	// --------------------------
+	public static void main(String[] args) {
+		MultiIterableClass mic = new MultiIterableClass();
+		for (String s : mic.reverseds())
+			System.out.print(s + " ");
+		System.out.println();
+		for (String s : mic.randomized())
+			System.out.print(s + " ");
+		System.out.println();
+		for (String s : mic)
+			System.out.print(s + "  ");
+
+	}
+}

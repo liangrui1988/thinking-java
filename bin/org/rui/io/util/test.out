@@ -1,0 +1,51 @@
+package org.rui.io.util;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+
+/**
+ * 标准I/O重定向 
+ * 
+ * @author lenovo
+ *
+ */
+public class Redircting {
+	
+
+	public static void main(String[] args) throws IOException {
+		String path="D:\\Users\\liangrui\\workspace\\thinking\\src\\org\\rui\\io\\util/";
+		PrintStream console=System.out;
+		//输入
+		BufferedInputStream in=new BufferedInputStream(
+				new FileInputStream(path+"Redircting.java")
+				);
+		//输出
+		PrintStream out=new PrintStream(
+				new BufferedOutputStream(
+						new FileOutputStream(path+"test.out")
+						)
+				);
+		//允许我们对标准输入输出  和错误IO流进行重定向
+		System.setIn(in);
+		System.setOut(out);
+		System.setErr(out);
+		
+		//打印得定向的输入流
+		BufferedReader  br=new BufferedReader(
+				new InputStreamReader(System.in)
+				);
+		String s;
+		while((s=br.readLine())!=null)
+			System.out.println(s);
+		out.close();// remember this!
+		System.setOut(console);;
+	}
+	
+}
