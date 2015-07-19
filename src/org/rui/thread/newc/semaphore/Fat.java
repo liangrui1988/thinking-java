@@ -17,7 +17,7 @@ public class Fat
 
 	public void operation()
 	{
-		System.out.println(this);
+		System.out.println("operation>>  "+this);
 	}
 
 	@Override
